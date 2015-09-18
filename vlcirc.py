@@ -8,8 +8,10 @@
 #    python vlcirc.py /home/mindey/AlienPlanet.avi MindeyXX1
 # 2) Open website:
 #    http://webchat.freenode.net/?channels=MindeyXX1
-# 3) Once all of your friends had come to channel, typing:
-#    play time=180
+# 3) Once all of your friends had come to channel, type:
+#    PLAY @45:18
+#    or just
+#    PLAY
 #
 # Will start VLC player on all of the friends' computers almost simultaneously.
 #
@@ -37,7 +39,7 @@ from platform import system as syst
 from time import sleep
 
 video_path = argv[1]
-irc_nickname = 'Ply'+str(int(random()*10**5))
+irc_nickname = 'VLC_'+str(int(random()*10**5))
 irc_channel = argv[2]
 try:
   correction = float(argv[3])
@@ -58,16 +60,12 @@ irc.send ( 'JOIN #%s\r\n' % irc_channel)
 def ircstream():
   while True:
     data = irc.recv ( 4096 )
-    if data.find ( 'PING' ) != -1:
-      irc.send ( 'PONG ' + data.split() [ 1 ] + '\r\n' )
     print data # IRC channel data
     if 'End of /NAMES list' in data:
-      print "Now, join the channel: http://webchat.freenode.net/?channels=%s channel, and type 'play time=180' to start video at 2:00 min." % irc_channel 
-    if ('play' in data) or ('pause' in data):
-      if 'lay time=' in data:
-        time = int(data.split('lay time=')[1].split(' ')[0])
-      elif 'lay at ' in data:
-        T = [int(t) for t in data.split('lay at ')[1].split(' ')[0].split(':')]
+      print "Now, join the channel: http://webchat.freenode.net/?channels=%s channel, and type 'PLAY @2:00' to start video at 2:00." % irc_channel 
+    if ('PLAY' in data):
+      if 'PLAY @' in data:
+        T = [int(t) for t in data.split('PLAY @')[1].split(' ')[0].split(':')]
         if len(T) == 3:
           time = T[0]*3600+T[1]*60+T[2]
         elif len(T) == 2:
