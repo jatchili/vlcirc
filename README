@@ -9,8 +9,10 @@ Example: (Linux and MacOS)
    python vlcirc.py /home/mindey/AlienPlanet.avi MindeyXX1
 2) Open website:
    http://webchat.freenode.net/?channels=MindeyXX1
-3) Once all of your friends had come to channel, typing:
-   play time=180
+3) Once all of your friends had come to channel, type:
+   PLAY @45:18
+   or just
+   PLAY
 
 Will start VLC player on all of the friends' computers almost simultaneously.
 
